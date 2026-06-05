@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Models & Checkpoints
+# Exclude all checkpoints to save space and avoid GitHub limits
+models/edugpt-lora/checkpoint-*/
+# But keep the final adapter files
+!models/edugpt-lora/adapter_model.safetensors
+!models/edugpt-lora/adapter_config.json
+!models/edugpt-lora/tokenizer.json
+!models/edugpt-lora/tokenizer_config.json
+!models/edugpt-lora/special_tokens_map.json
+!models/edugpt-lora/vocab.json
+!models/edugpt-lora/merges.txt
+
+# Data
+data/education_dataset.json
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db
