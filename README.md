@@ -1,82 +1,48 @@
-# EduGPT – Fine-Tuned Educational Assistant 🎓
+# EduGPT ✨ - Premium AI Educational Workspace
 
-EduGPT is a production-ready, end-to-end educational AI assistant built by fine-tuning the **SmolLM2-135M** model. It is specifically designed to run on consumer-grade hardware (like a 4GB NVIDIA GPU) using **QLoRA** and **4-bit quantization**.
+EduGPT is a high-performance, fine-tuned educational AI assistant based on the **SmolLM2-135M** architecture. It features a premium Glassmorphism UI and a suite of tools designed to enhance the learning experience.
 
 ## 🚀 Features
-- **Topic Explanation:** Breaks down complex subjects into simple, high-school-level terms.
-- **Notes Summarization:** Condenses educational text into key principles and insights.
-- **Quiz Generation:** Creates multiple-choice questions with explanations for active learning.
-- **Flashcard Generation:** Automatically generates study flashcards for better retention.
-- **Educational QA:** High-accuracy answering for academic questions.
-- **Modern UI:** Premium Glassmorphism dark theme with responsive layout and real-time chat.
-- **RAG Ready:** Architecture prepared for PDF ingestion and FAISS semantic search.
+
+- **💬 Chat Workspace:** Intelligent educational conversations with minimal repetition.
+- **📝 Summarizer:** Condense complex educational text into clear bullet points.
+- **❓ Quiz Generator:** Instantly create multiple-choice quizzes on any topic.
+- **🧠 Flashcards:** Generate study cards to help with memorization.
+- **📊 Analytics:** Track your learning progress with a professional dashboard.
+- **🌓 Dark/Light Mode:** Seamlessly switch between themes.
 
 ## 🛠️ Tech Stack
-- **AI Core:** SmolLM2-135M-Instruct (Hugging Face)
-- **Fine-Tuning:** LoRA, QLoRA (PEFT, BitsAndBytes)
-- **Training Framework:** TRL SFTTrainer, PyTorch, Accelerate
-- **Interface:** Streamlit (Custom Glassmorphism CSS)
-- **Data:** Synthetic Instruction-Tuning Dataset (1200+ samples)
 
-## 📁 Project Architecture
-```text
-EduGPT/
-├── app/                # Streamlit UI & Glassmorphism design
-├── data/               # Dataset generator & educational samples
-├── inference/          # Chat scripts & evaluation metrics
-├── models/             # Saved LoRA adapters (fine-tuned weights)
-├── report/             # Evaluation & training reports
-├── training/           # QLoRA training scripts & configuration
-├── requirements.txt    # Production dependencies
-└── README.md           # Documentation
-```
+- **Model:** SmolLM2-135M (Fine-tuned with QLoRA)
+- **Frameworks:** PyTorch, HuggingFace Transformers, PEFT, TRL
+- **UI:** Streamlit with Custom CSS (Glassmorphism)
+- **Optimization:** BitsAndBytes 4-bit Quantization (for GPU environments)
 
-## ⚙️ Installation & Setup
+## 📦 Installation & Setup
 
-1. **Clone & Navigate:**
+1. **Clone the repository:**
    ```bash
-   git clone <repo-url>
-   cd EduGPT
+   git clone https://github.com/Niru-re/EduGPT-v-2.git
+   cd EduGPT-v-2
    ```
 
-2. **Install Dependencies:**
+2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Generate Training Data:**
-   ```bash
-   python data/generate_dataset.py
-   ```
-
-4. **Start Fine-Tuning:**
-   ```bash
-   python training/train.py
-   ```
-   *Note: Automatically detects GPU/VRAM. For 4GB cards, it uses gradient checkpointing and 8-bit optimization.*
-
-5. **Launch EduGPT Assistant:**
+3. **Run the application:**
    ```bash
    streamlit run app/streamlit_app.py
    ```
 
-## 📊 Hardware Optimization
-- **Memory:** Uses `paged_adamw_8bit` optimizer and `gradient_checkpointing` to minimize VRAM usage.
-- **Quantization:** Employs `NF4` 4-bit quantization (QLoRA) for efficient weights loading.
-- **Batching:** Uses small per-device batch sizes with high gradient accumulation (8 steps) to maintain effective batch size without crashing.
+## 🌐 Deployment on Streamlit Cloud
 
-## 📄 Resume Content (AI Engineer)
-- **Project: EduGPT - Fine-Tuned Educational Assistant**
-- Built an end-to-end LLM pipeline using **SmolLM2-135M** and **QLoRA** for educational domain adaptation.
-- Optimized model training for **4GB VRAM** constraints using **PEFT**, **bitsandbytes**, and **gradient checkpointing**.
-- Developed a synthetic dataset generator producing **1200+ instruction-tuning pairs** across Science, History, Tech, and Math.
-- Designed a **Streamlit** dashboard with a custom **Glassmorphism UI**, featuring multi-tab educational tools (Summarizer, Quiz Gen).
-- Implemented robust error handling for CUDA memory management and fallback mechanisms for low-resource environments.
-
-## 🔮 Future Roadmap
-- **Full RAG Integration:** Use FAISS to index uploaded PDFs for document-grounded QA.
-- **DPO Alignment:** Further align the model using Direct Preference Optimization.
-- **Vision Support:** Integrate image-to-text for analyzing study diagrams.
+1. Push your changes to GitHub.
+2. Visit [Streamlit Cloud](https://share.streamlit.io/).
+3. Connect your GitHub account and select this repository.
+4. Set the main file path to `app/streamlit_app.py`.
+5. Click **Deploy**!
 
 ---
-*Developed by a Senior AI & Full-Stack Engineer for the next generation of digital learning.*
+*Developed with ❤️ for Students and Educators.*
