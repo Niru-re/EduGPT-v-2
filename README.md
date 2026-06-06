@@ -41,7 +41,9 @@ EduGPT is a high-performance, fine-tuned educational AI assistant based on the *
 1. Push your changes to GitHub.
 2. Visit [Streamlit Cloud](https://share.streamlit.io/).
 3. Connect your GitHub account and select this repository.
-4. Set the main file path to `app/streamlit_app.py`.
+4. **Important Settings:**
+   - **Main file path:** `app/streamlit_app.py`
+   - **Python Version:** Select **3.11** (recommended for stability)
 5. Click **Deploy**!
 
 ---
