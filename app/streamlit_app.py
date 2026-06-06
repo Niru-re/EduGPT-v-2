@@ -184,11 +184,15 @@ def apply_saas_ui():
 @st.cache_resource
 def load_engine():
     try:
+        # Check if we are on a GPU or CPU (Streamlit Cloud is CPU)
+        is_cuda = torch.cuda.is_available()
+        device = "cuda" if is_cuda else "cpu"
+        
         tokenizer = AutoTokenizer.from_pretrained(Config.MODEL_NAME, trust_remote_code=True)
         tokenizer.pad_token = tokenizer.eos_token
-        device_map = "auto" if torch.cuda.is_available() else {"": "cpu"}
         
-        if torch.cuda.is_available():
+        if is_cuda:
+            # GPU Mode: Use 4-bit quantization
             from transformers import BitsAndBytesConfig
             bnb_config = BitsAndBytesConfig(
                 load_in_4bit=True,
@@ -199,25 +203,33 @@ def load_engine():
             model = AutoModelForCausalLM.from_pretrained(
                 Config.MODEL_NAME,
                 quantization_config=bnb_config,
-                device_map=device_map,
+                device_map="auto",
                 trust_remote_code=True
             )
         else:
+            # CPU Mode (Streamlit Cloud): Load in float32 without bitsandbytes
+            # device_map="auto" can be problematic on some CPU environments
             model = AutoModelForCausalLM.from_pretrained(
                 Config.MODEL_NAME,
-                device_map=device_map,
+                torch_dtype=torch.float32,
+                low_cpu_mem_usage=True,
                 trust_remote_code=True
-            )
+            ).to("cpu")
         
-        if os.path.exists(Config.OUTPUT_DIR):
+        # Load LoRA adapter
+        # Use absolute path or ensure the path is correct relative to the script
+        adapter_path = os.path.join(project_root, "models", "edugpt-lora")
+        if os.path.exists(adapter_path):
             st.sidebar.success("✅ EduGPT LoRA Model Loaded!")
-            model = PeftModel.from_pretrained(model, Config.OUTPUT_DIR)
+            model = PeftModel.from_pretrained(model, adapter_path)
         else:
-            st.sidebar.warning("⚠️ Using Base Model (Training Pending)")
+            st.sidebar.warning(f"⚠️ Adapter not found at {adapter_path}. Using Base Model.")
             
         return model, tokenizer
     except Exception as e:
-        st.error(f"Engine Load Error: {e}")
+        st.error(f"Engine Load Error: {str(e)}")
+        # Log the error for debugging in Streamlit Cloud logs
+        print(f"DEPLOYMENT ERROR: {str(e)}")
         return None, None
 
 def ai_generate(model, tokenizer, prompt, temp=0.3, max_tokens=512):
